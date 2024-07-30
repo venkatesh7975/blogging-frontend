@@ -1,0 +1,70 @@
+/* MyPosts.css */
+.my-posts-container {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.my-posts-container h2 {
+  margin-bottom: 20px;
+  color: #333333;
+}
+
+.create-post input,
+.create-post textarea {
+  width: calc(100% - 22px);
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+}
+
+.create-post button {
+  padding: 10px 15px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.create-post button:hover {
+  background-color: #45a049;
+}
+
+.posts-list .post-item {
+  background-color: #f9f9f9;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.posts-list .post-item h3 {
+  margin-top: 0;
+}
+
+.posts-list .post-item button {
+  margin-right: 10px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.posts-list .post-item button:hover {
+  opacity: 0.8;
+}
+
+.posts-list .post-item button:first-of-type {
+  background-color: #008CBA;
+  color: white;
+}
+
+.posts-list .post-item button:last-of-type {
+  background-color: #f44336;
+  color: white;
+}

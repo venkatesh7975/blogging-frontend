@@ -1,0 +1,55 @@
+/* Posts.css */
+.posts-container {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.posts-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.posts-header h2 {
+  margin: 0;
+  color: #333333;
+}
+
+.logout-btn,
+.my-posts-btn {
+  padding: 10px 15px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.logout-btn:hover,
+.my-posts-btn:hover {
+  background-color: #d32f2f;
+}
+
+.post {
+  background-color: #f9f9f9;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.post h3 {
+  margin-top: 0;
+}
+
+.post p {
+  margin: 10px 0;
+}
+
+.post small {
+  color: #666666;
+}
