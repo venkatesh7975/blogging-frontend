@@ -2,6 +2,15 @@
 .comments-container {
   margin-top: 20px;
 }
+.comments-section {
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.comments-container h3 {
+  cursor: pointer;
+  margin-bottom: 10px;
+}
 
 .comment {
   background-color: #f9f9f9;
@@ -24,7 +33,7 @@
 }
 
 .comment button.btn-update {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
 }
 
@@ -44,7 +53,7 @@
 .comments-container button.btn-add {
   margin-top: 10px;
   padding: 10px 15px;
-  background-color: #008CBA;
+  background-color: #008cba;
   color: white;
   border: none;
   border-radius: 5px;

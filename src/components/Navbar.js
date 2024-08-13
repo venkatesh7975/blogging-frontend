@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "./navbar.css";
+import "./Navbar.css";
 
 const Navbar = () => {
   const token = localStorage.getItem("token");
@@ -11,11 +11,24 @@ const Navbar = () => {
     navigate("/");
   };
 
+  const handleCreatePost = () => {
+    if (!token) {
+      alert("You need to be logged in to create a post.");
+    } else {
+      navigate("/my-posts");
+    }
+  };
+
   return (
     <nav className="navbar">
       <Link to="/" className="navbar-brand">
         Blogging Website
       </Link>
+      <div className="create-post-link">
+        <button onClick={handleCreatePost} className="btn">
+          Create New Post
+        </button>
+      </div>
       <div className="navbar-links">
         {token ? (
           <>

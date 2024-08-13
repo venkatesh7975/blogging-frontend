@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { jwtDecode } from "jwt-decode";
+import { jwtDecode } from "jwt-decode"; // Corrected the import statement
 import "./Comments.css";
 
 const Comments = ({ postId }) => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
+  const [isOpen, setIsOpen] = useState(false); // State to toggle accordion
   const token = localStorage.getItem("token");
   const currentUser = token ? jwtDecode(token) : null;
 
@@ -25,6 +26,11 @@ const Comments = ({ postId }) => {
   }, [postId]);
 
   const handleCreateComment = async () => {
+    if (!token) {
+      alert("Please login to add a comment.");
+      return;
+    }
+
     try {
       const response = await axios.post(
         `https://blogging-backend-hy6p.onrender.com/api/comments`,
@@ -76,45 +82,54 @@ const Comments = ({ postId }) => {
 
   return (
     <div className="comments-container">
-      <h3>Comments</h3>
-      {comments.map((comment) => (
-        <div key={comment._id} className="comment">
-          <p>
-            <strong>{comment.author_id.username}:</strong> {comment.content}
-          </p>
-          {currentUser && currentUser.id === comment.author_id._id && (
-            <>
-              <button
-                className="btn-update"
-                onClick={() =>
-                  handleUpdateComment(
-                    comment._id,
-                    prompt("Update comment:", comment.content)
-                  )
-                }
-              >
-                Update
-              </button>
-              <button
-                className="btn-delete"
-                onClick={() => handleDeleteComment(comment._id)}
-              >
-                Delete
-              </button>
-            </>
+      <h3 onClick={() => setIsOpen(!isOpen)} style={{ cursor: "pointer" }}>
+        Comments ({comments.length}) {isOpen ? "\u25BC" : "\u25BA"}
+      </h3>
+      {isOpen && (
+        <div className="comments-section">
+          {comments.length === 0 ? (
+            <p>No comments yet. Be the first to comment!</p>
+          ) : (
+            comments.map((comment) => (
+              <div key={comment._id} className="comment">
+                <p>
+                  <strong>{comment.author_id.username}:</strong>{" "}
+                  {comment.content}
+                </p>
+                {currentUser && currentUser.id === comment.author_id._id && (
+                  <>
+                    <button
+                      className="btn-update"
+                      onClick={() =>
+                        handleUpdateComment(
+                          comment._id,
+                          prompt("Update comment:", comment.content)
+                        )
+                      }
+                    >
+                      Update
+                    </button>
+                    <button
+                      className="btn-delete"
+                      onClick={() => handleDeleteComment(comment._id)}
+                    >
+                      Delete
+                    </button>
+                  </>
+                )}
+              </div>
+            ))
           )}
+          <input
+            type="text"
+            value={newComment}
+            onChange={(e) => setNewComment(e.target.value)}
+            placeholder="Add a comment"
+          />
+          <button className="btn-add" onClick={handleCreateComment}>
+            Add Comment
+          </button>
         </div>
-      ))}
-      <input
-        type="text"
-        value={newComment}
-        onChange={(e) => setNewComment(e.target.value)}
-        placeholder="Add a comment"
-      />
-      {token && (
-        <button className="btn-add" onClick={handleCreateComment}>
-          Add Comment
-        </button>
       )}
     </div>
   );

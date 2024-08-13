@@ -16,15 +16,19 @@
 .create-post input,
 .create-post textarea {
   width: calc(100% - 22px);
+
   padding: 10px;
   margin-bottom: 10px;
   border: 1px solid #cccccc;
   border-radius: 5px;
 }
+textarea {
+  height: 100px;
+}
 
 .create-post button {
   padding: 10px 15px;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   border: none;
   border-radius: 5px;
@@ -60,7 +64,7 @@
 }
 
 .posts-list .post-item button:first-of-type {
-  background-color: #008CBA;
+  background-color: #008cba;
   color: white;
 }
 

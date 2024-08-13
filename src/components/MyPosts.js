@@ -86,7 +86,7 @@ const MyPosts = () => {
 
   return (
     <div className="my-posts-container">
-      <h2>My Posts</h2>
+      <h2>Create a Post</h2>
       <div className="create-post">
         <input
           type="text"
@@ -105,6 +105,7 @@ const MyPosts = () => {
           <button onClick={handleCreatePost}>Create Post</button>
         )}
       </div>
+      <h2>My Posts</h2>
       <div className="posts-list">
         {posts.map((post) => (
           <div key={post._id} className="post-item">
