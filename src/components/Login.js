@@ -1,54 +1,124 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
+  const [otp, setOtp] = useState("");
+  const [showOtpField, setShowOtpField] = useState(false);
+  const navigate = useNavigate(); // Initialize useNavigate
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleLogin = async () => {
     try {
       const response = await axios.post(
-        `https://blogging-backend-hy6p.onrender.com/api/auth/login`,
+        "http://localhost:5000/api/auth/login",
         {
-          username,
+          email,
           password,
         }
       );
-      localStorage.setItem("token", response.data.token);
-      navigate("/posts");
+
+      if (response.data.success) {
+        setShowOtpField(true);
+        alert("OTP sent to your email. Check your inbox.");
+      } else {
+        alert(response.data.message);
+      }
     } catch (error) {
-      console.error("Error logging in:", error);
-      alert("Login failed.");
+      console.error("Error during login:", error.message);
+      alert("An error occurred during login");
+    }
+  };
+
+  const handleOtpVerification = async () => {
+    try {
+      const otpResponse = await axios.post(
+        "http://localhost:5000/api/auth/verify-otp",
+        {
+          otp,
+        }
+      );
+
+      if (otpResponse.data.success) {
+        localStorage.setItem("token", otpResponse.data.token); // Set the token after successful OTP verification
+        alert("OTP Verified. User logged in.");
+        navigate("/posts"); // Redirect to posts on successful OTP verification
+      } else {
+        alert("Invalid OTP. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error during OTP verification:", error.message);
+      alert("An error occurred during OTP verification");
     }
   };
 
   return (
-    <div className="login-container">
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit">Login</button>
-      </form>
-      <p>
-        Don't have an account? <Link to="/register">Register</Link>
-      </p>
+    <div className="container mt-5">
+      <div className="row justify-content-center">
+        <div className="col-md-6">
+          <div className="card">
+            <div className="card-body">
+              <h3 className="card-title text-center mb-4">Login</h3>
+              <div className="form-group">
+                <label>Email</label>
+                <input
+                  type="email"
+                  className="form-control"
+                  placeholder="Email"
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Password</label>
+                <input
+                  type="password"
+                  className="form-control"
+                  placeholder="Password"
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+
+              {showOtpField && (
+                <div className="form-group">
+                  <label>OTP</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="OTP"
+                    onChange={(e) => setOtp(e.target.value)}
+                    required
+                  />
+                  <button
+                    className="btn btn-primary btn-block mt-3"
+                    onClick={handleOtpVerification}
+                  >
+                    Verify OTP
+                  </button>
+                </div>
+              )}
+
+              {!showOtpField && (
+                <button
+                  className="btn btn-primary btn-block mt-3"
+                  onClick={handleLogin}
+                >
+                  Login
+                </button>
+              )}
+
+              <div className="text-center mt-3">
+                <a href="/request-reset" className="btn btn-link">
+                  Forgot Password?
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

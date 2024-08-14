@@ -14,7 +14,7 @@ const Comments = ({ postId }) => {
     const fetchComments = async () => {
       try {
         const response = await axios.get(
-          `https://blogging-backend-hy6p.onrender.com/api/comments/${postId}`
+          `http://localhost:5000/api/comments/${postId}`
         );
         setComments(response.data);
       } catch (error) {
@@ -33,7 +33,7 @@ const Comments = ({ postId }) => {
 
     try {
       const response = await axios.post(
-        `https://blogging-backend-hy6p.onrender.com/api/comments`,
+        `http://localhost:5000/api/comments`,
         { post_id: postId, content: newComment },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -50,7 +50,7 @@ const Comments = ({ postId }) => {
     if (!updatedContent) return;
     try {
       const response = await axios.put(
-        `https://blogging-backend-hy6p.onrender.com/api/comments/${id}`,
+        `http://localhost:5000/api/comments/${id}`,
         { content: updatedContent },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -68,12 +68,9 @@ const Comments = ({ postId }) => {
 
   const handleDeleteComment = async (id) => {
     try {
-      await axios.delete(
-        `https://blogging-backend-hy6p.onrender.com/api/comments/${id}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      await axios.delete(`http://localhost:5000/api/comments/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setComments(comments.filter((comment) => comment._id !== id));
     } catch (error) {
       console.error("Error deleting comment:", error);

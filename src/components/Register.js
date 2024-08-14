@@ -12,14 +12,11 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(
-        `https://blogging-backend-hy6p.onrender.com/api/auth/register`,
-        {
-          username,
-          password,
-          email,
-        }
-      );
+      await axios.post(`http://localhost:5000/api/auth/register`, {
+        username,
+        password,
+        email,
+      });
       navigate("/login");
     } catch (error) {
       console.error("Error registering:", error);
@@ -39,19 +36,20 @@ const Register = () => {
           required
         />
         <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <input
           type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
         />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+
         <button type="submit">Register</button>
       </form>
       <p>

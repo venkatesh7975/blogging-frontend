@@ -13,7 +13,7 @@ const MyPosts = () => {
     const fetchMyPosts = async () => {
       try {
         const response = await axios.get(
-          `https://blogging-backend-hy6p.onrender.com/api/posts/author/me`,
+          `http://localhost:5000/api/posts/author/me`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -30,7 +30,7 @@ const MyPosts = () => {
   const handleCreatePost = async () => {
     try {
       const response = await axios.post(
-        `https://blogging-backend-hy6p.onrender.com/api/posts`,
+        `http://localhost:5000/api/posts`,
         { title, content },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -47,7 +47,7 @@ const MyPosts = () => {
   const handleUpdatePost = async () => {
     try {
       const response = await axios.put(
-        `https://blogging-backend-hy6p.onrender.com/api/posts/${currentPostId}`,
+        `http://localhost:5000/api/posts/${currentPostId}`,
         { title, content },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -66,12 +66,9 @@ const MyPosts = () => {
 
   const handleDeletePost = async (id) => {
     try {
-      await axios.delete(
-        `https://blogging-backend-hy6p.onrender.com/api/posts/${id}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      await axios.delete(`http://localhost:5000/api/posts/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setPosts(posts.filter((post) => post._id !== id));
     } catch (error) {
       console.error("Error deleting post:", error);

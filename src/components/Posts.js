@@ -9,9 +9,7 @@ const Posts = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get(
-          `https://blogging-backend-hy6p.onrender.com/api/posts`
-        );
+        const response = await axios.get(`http://localhost:5000/api/posts`);
         setPosts(response.data);
         console.log(response.data);
       } catch (error) {
